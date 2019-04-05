@@ -19,18 +19,23 @@ main ()
   for (auto& jj : m)
     std::cout << jj.first << " " << jj.second << std::endl;
 
-  auto jj = m.begin ();
-  while(jj != m.end ())
-  {
-    if (jj->second < .5){
+  /*
+  for (auto jj = m.begin (); jj != m.end (); ++jj)
+    if (jj->second < .5)
       m.erase (jj);
-      jj=m.begin();
+  */
+
+  auto ii = m.begin ();
+  while (ii != m.end ())
+    {
+      ii = std::find_if (m.begin (), m.end (), [] (std::pair<int, double> x) { return x.second < .5; });
+      auto kk = ii;
+      if (ii != m.end ())
+        {
+          ++ii;
+          m.erase (kk);
+        }
     }
-    else jj++;
-  }
-
-
-
   std::cout << "final contents" << std::endl;
   for (auto& jj : m)
     std::cout << jj.first << " " << jj.second << std::endl;
